@@ -1,9 +1,17 @@
+import { bindActionCreators } from "redux";
 
 export const initialState = {
-}
+  smurfs: [],
+  loading: false,
+  error: "",
+};
 
-const reducer = ()=>{
-}
+const reducer = () => {
+  switch (bindActionCreators.type) {
+    default:
+      return state;
+  }
+};
 
 export default reducer;
 
