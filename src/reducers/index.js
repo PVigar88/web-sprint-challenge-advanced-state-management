@@ -1,51 +1,46 @@
-import { bindActionCreators } from "redux";
-
 import {
   LOADING_SMURFS,
   SMURF_SUCCESS,
   SMURF_FAIL,
   ADD_SMURF,
+  ENTRY_ERROR,
 } from "../actions";
 
 export const initialState = {
-  smurfs: [
-    {
-      id: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9",
-      name: "Poppa Smurf",
-      position: "Village Leader",
-      nickname: "Pops",
-      description:
-        "Papa is the practical village leader and the father figure of 100 or so young Smurfs. He is easily identified by his red Smurf hat, pants, and a shortly-trimmed white beard and moustache.",
-    },
-  ],
+  smurfs: [],
   isLoading: false,
   error: "",
 };
 
 const reducer = (state = initialState, action) => {
-  switch (bindActionCreators.type) {
+  switch (action.type) {
     case LOADING_SMURFS:
       return {
         ...state,
-        loading: true,
+        isLoading: true,
       };
     case SMURF_SUCCESS:
       return {
         ...state,
-        loading: false,
+        isLoading: false,
         smurfs: [...action.payload],
       };
     case SMURF_FAIL:
       return {
         ...state,
-        loading: false,
+        isLoading: false,
         error: action.payload,
       };
     case ADD_SMURF:
       return {
         ...state,
-        loading: false,
-        smurfs: [action.payload, ...state.smurfs],
+        isLoading: false,
+        smurfs: action.payload,
+      };
+    case ENTRY_ERROR:
+      return {
+        ...state,
+        error: action.payload,
       };
     default:
       return state;

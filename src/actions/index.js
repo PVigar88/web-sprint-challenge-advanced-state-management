@@ -4,6 +4,7 @@ export const LOADING_SMURFS = "LOADING_SMURFS";
 export const SMURF_SUCCESS = "SMURF_SUCCESS";
 export const SMURF_FAIL = "SMURF_FAIL";
 export const ADD_SMURF = "ADD_SMURF";
+export const ENTRY_ERROR = "ENTRY_ERROR";
 
 export const getSmurfs = () => (dispatch) => {
   dispatch({ type: LOADING_SMURFS });
@@ -16,6 +17,25 @@ export const getSmurfs = () => (dispatch) => {
     .catch((err) => {
       dispatch({ type: SMURF_FAIL, payload: JSON.stringify(err) });
     });
+};
+
+export const addSmurf = (newSmurf) => (dispatch) => {
+  axios
+    .post("http://localhost:3333/smurfs", newSmurf)
+    .then((res) => {
+      console.log(res.data);
+      dispatch({ type: ADD_SMURF, payload: res.data });
+    })
+    .catch((err) => {
+      dispatch({ type: SMURF_FAIL, payload: { err } });
+    });
+};
+
+export const setError = () => (dispatch) => {
+  dispatch({
+    type: ENTRY_ERROR,
+    payload: "Name, position and nickname fields are required.",
+  });
 };
 
 //Task List:
