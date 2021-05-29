@@ -1,13 +1,43 @@
 import { bindActionCreators } from "redux";
 
+import {
+  LOADING_SMURFS,
+  SMURF_SUCCESS,
+  SMURF_FAIL,
+  ADD_SMURF,
+} from "../actions";
+
 export const initialState = {
   smurfs: [],
   loading: false,
   error: "",
 };
 
-const reducer = () => {
+const reducer = (state = initialState, action) => {
   switch (bindActionCreators.type) {
+    case LOADING_SMURFS:
+      return {
+        ...state,
+        loading: true,
+      };
+    case SMURF_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        smurfs: [...action.payload],
+      };
+    case SMURF_FAIL:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      };
+    case ADD_SMURF:
+      return {
+        ...state,
+        loading: false,
+        smurfs: [action.payload, ...state.smurfs],
+      };
     default:
       return state;
   }
